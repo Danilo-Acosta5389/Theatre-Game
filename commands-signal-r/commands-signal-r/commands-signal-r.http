@@ -1,0 +1,6 @@
+@commands_signal_r_HostAddress = http://localhost:5299
+
+GET {{commands_signal_r_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
