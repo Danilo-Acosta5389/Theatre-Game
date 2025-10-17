@@ -26,7 +26,7 @@ namespace commands_signal_r
                     policy.AllowAnyHeader()
                           .AllowAnyMethod()
                           .AllowCredentials()
-                          .WithOrigins("http://localhost:5173"); // React dev server
+                          .WithOrigins("http://localhost:5173","http://theatre.whatisspace.online", "https://theatre.whatisspace.online");
                 });
             });
 

@@ -1,6 +1,7 @@
 import { useParams } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import * as signalR from "@microsoft/signalr";
+import { BASE } from "../API/URLS";
 
 export default function ActorPage() {
   const { roleName } = useParams({ from: "/actor/$roleName" });
@@ -41,7 +42,7 @@ export default function ActorPage() {
 
   useEffect(() => {
     const conn = new signalR.HubConnectionBuilder()
-      .withUrl(`http://localhost:5299/theatrehub`)
+      .withUrl(BASE)
       .withAutomaticReconnect()
       .build();
 

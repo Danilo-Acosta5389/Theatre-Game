@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import * as signalR from "@microsoft/signalr";
+import { BASE } from "../API/URLS";
 
 function AudiencePage() {
   const [roles, setRoles] = useState([]);
 
   useEffect(() => {
     const conn = new signalR.HubConnectionBuilder()
-      .withUrl(`http://localhost:5299/theatrehub`)
+      .withUrl(BASE)
       .withAutomaticReconnect()
       .build();
 
