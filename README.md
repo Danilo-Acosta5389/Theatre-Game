@@ -17,7 +17,7 @@ The app enables multiple actors and audience members to interact in real-time:
 - **Audience members** can select an active role and send instructions.
 - Both sides see chat-like message boxes displaying sent and received messages.
 
-## Demo
+## 🚀 Demo
 You can test this app [here](https://theatre.whatisspace.online/)
 
 How to use:
