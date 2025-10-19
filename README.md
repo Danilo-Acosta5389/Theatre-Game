@@ -17,6 +17,17 @@ The app enables multiple actors and audience members to interact in real-time:
 - **Audience members** can select an active role and send instructions.
 - Both sides see chat-like message boxes displaying sent and received messages.
 
+## Demo
+You can test this app [here](https://theatre.whatisspace.online/)
+
+How to use:
+- Open actor page in new tab, window or other device
+- In actor page, create a role and wait for instructions from audience
+- In audience page, click the role that appears and write instructions, the actor will receive in text and Text-To-Speech
+
+Remember:
+- If actor changes page, the connection will be lost, just redo the above steps
+- Text-To-Speech Syntesizer works a bit different on different browsers and OS. Sometimes you have to change language and select voice for it to work.
 ---
 
 ## ⚙️ Tech Stack
@@ -102,10 +113,9 @@ Each new instruction triggers:
 
 ---
 
-## 💻 Running the App Locally
+🧑‍💻 Author
 
-### Backend (.NET)
-```bash
-cd backend
-dotnet restore
-dotnet run
+Danilo Acosta
+Full-stack developer • [Website](https://daniloacosta.dev/)
+
+GitHub: [Danilo-Acosta5389](https://github.com/Danilo-Acosta5389/)
