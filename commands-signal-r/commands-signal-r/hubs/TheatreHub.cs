@@ -7,10 +7,10 @@ namespace commands_signal_r.hubs
     {
         // NEW
         private static readonly ConcurrentDictionary<string, TheatreSession> Sessions
-           = new ConcurrentDictionary<string, TheatreSession>();
+           = new ConcurrentDictionary<string, TheatreSession>(); // SessionId -> TheatreSession
 
         private static readonly ConcurrentDictionary<string, (string SessionId, string Role)> ActorConnections
-            = new ConcurrentDictionary<string, (string, string)>();
+            = new ConcurrentDictionary<string, (string, string)>(); // ConnectionId -> (SessionId, Role)
 
         private static readonly TimeSpan SessionExpiration = TimeSpan.FromHours(24);
 
@@ -29,10 +29,11 @@ namespace commands_signal_r.hubs
         {
             var session = Sessions.GetOrAdd(sessionId, _ => new TheatreSession
             {
-                SessionId = sessionId
+                SessionId = sessionId,
+                LastActivity = DateTime.UtcNow
             });
 
-            if (roleName is null || roleName == string.Empty) return;
+            if (roleName is null || string.IsNullOrWhiteSpace(roleName)) return;
 
             await RegisterRoleInternal(sessionId, roleName);
         }
@@ -255,7 +256,7 @@ namespace commands_signal_r.hubs
     public class TheatreSession
     {
         public string SessionId { get; set; } = "";
-        public Dictionary<string, List<string>> RolesByConnection { get; set; } = new();
+        public Dictionary<string, List<string>> RolesByConnection { get; set; } = new(); // RoleName -> List of ConnectionIds
         public DateTime LastActivity { get; set; } = DateTime.UtcNow;
     }
 }
