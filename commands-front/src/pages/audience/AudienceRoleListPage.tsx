@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import * as signalR from "@microsoft/signalr";
-import { BASE } from "../API/URLS";
+import { BASE } from "../../API/URLS";
 
-function AudiencePage() {
+function AudienceRoleListPage() {
   const [roles, setRoles] = useState([]);
 
   useEffect(() => {
@@ -52,4 +52,4 @@ function AudiencePage() {
   );
 }
 
-export default AudiencePage;
+export default AudienceRoleListPage;

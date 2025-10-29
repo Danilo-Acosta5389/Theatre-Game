@@ -12,8 +12,10 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AudienceIndexRouteImport } from './routes/audience/index'
 import { Route as ActorIndexRouteImport } from './routes/actor/index'
-import { Route as AudienceRoleNameRouteImport } from './routes/audience/$roleName'
-import { Route as ActorRoleNameRouteImport } from './routes/actor/$roleName'
+import { Route as AudienceSessionIdIndexRouteImport } from './routes/audience/$sessionId/index'
+import { Route as ActorSessionIdIndexRouteImport } from './routes/actor/$sessionId/index'
+import { Route as AudienceSessionIdRoleNameRouteImport } from './routes/audience/$sessionId/$roleName'
+import { Route as ActorSessionIdRoleNameRouteImport } from './routes/actor/$sessionId/$roleName'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -30,64 +32,94 @@ const ActorIndexRoute = ActorIndexRouteImport.update({
   path: '/actor/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AudienceRoleNameRoute = AudienceRoleNameRouteImport.update({
-  id: '/audience/$roleName',
-  path: '/audience/$roleName',
+const AudienceSessionIdIndexRoute = AudienceSessionIdIndexRouteImport.update({
+  id: '/audience/$sessionId/',
+  path: '/audience/$sessionId/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ActorRoleNameRoute = ActorRoleNameRouteImport.update({
-  id: '/actor/$roleName',
-  path: '/actor/$roleName',
+const ActorSessionIdIndexRoute = ActorSessionIdIndexRouteImport.update({
+  id: '/actor/$sessionId/',
+  path: '/actor/$sessionId/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AudienceSessionIdRoleNameRoute =
+  AudienceSessionIdRoleNameRouteImport.update({
+    id: '/audience/$sessionId/$roleName',
+    path: '/audience/$sessionId/$roleName',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ActorSessionIdRoleNameRoute = ActorSessionIdRoleNameRouteImport.update({
+  id: '/actor/$sessionId/$roleName',
+  path: '/actor/$sessionId/$roleName',
   getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/actor/$roleName': typeof ActorRoleNameRoute
-  '/audience/$roleName': typeof AudienceRoleNameRoute
   '/actor': typeof ActorIndexRoute
   '/audience': typeof AudienceIndexRoute
+  '/actor/$sessionId/$roleName': typeof ActorSessionIdRoleNameRoute
+  '/audience/$sessionId/$roleName': typeof AudienceSessionIdRoleNameRoute
+  '/actor/$sessionId': typeof ActorSessionIdIndexRoute
+  '/audience/$sessionId': typeof AudienceSessionIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/actor/$roleName': typeof ActorRoleNameRoute
-  '/audience/$roleName': typeof AudienceRoleNameRoute
   '/actor': typeof ActorIndexRoute
   '/audience': typeof AudienceIndexRoute
+  '/actor/$sessionId/$roleName': typeof ActorSessionIdRoleNameRoute
+  '/audience/$sessionId/$roleName': typeof AudienceSessionIdRoleNameRoute
+  '/actor/$sessionId': typeof ActorSessionIdIndexRoute
+  '/audience/$sessionId': typeof AudienceSessionIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/actor/$roleName': typeof ActorRoleNameRoute
-  '/audience/$roleName': typeof AudienceRoleNameRoute
   '/actor/': typeof ActorIndexRoute
   '/audience/': typeof AudienceIndexRoute
+  '/actor/$sessionId/$roleName': typeof ActorSessionIdRoleNameRoute
+  '/audience/$sessionId/$roleName': typeof AudienceSessionIdRoleNameRoute
+  '/actor/$sessionId/': typeof ActorSessionIdIndexRoute
+  '/audience/$sessionId/': typeof AudienceSessionIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/actor/$roleName'
-    | '/audience/$roleName'
     | '/actor'
     | '/audience'
+    | '/actor/$sessionId/$roleName'
+    | '/audience/$sessionId/$roleName'
+    | '/actor/$sessionId'
+    | '/audience/$sessionId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/actor/$roleName' | '/audience/$roleName' | '/actor' | '/audience'
+  to:
+    | '/'
+    | '/actor'
+    | '/audience'
+    | '/actor/$sessionId/$roleName'
+    | '/audience/$sessionId/$roleName'
+    | '/actor/$sessionId'
+    | '/audience/$sessionId'
   id:
     | '__root__'
     | '/'
-    | '/actor/$roleName'
-    | '/audience/$roleName'
     | '/actor/'
     | '/audience/'
+    | '/actor/$sessionId/$roleName'
+    | '/audience/$sessionId/$roleName'
+    | '/actor/$sessionId/'
+    | '/audience/$sessionId/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  ActorRoleNameRoute: typeof ActorRoleNameRoute
-  AudienceRoleNameRoute: typeof AudienceRoleNameRoute
   ActorIndexRoute: typeof ActorIndexRoute
   AudienceIndexRoute: typeof AudienceIndexRoute
+  ActorSessionIdRoleNameRoute: typeof ActorSessionIdRoleNameRoute
+  AudienceSessionIdRoleNameRoute: typeof AudienceSessionIdRoleNameRoute
+  ActorSessionIdIndexRoute: typeof ActorSessionIdIndexRoute
+  AudienceSessionIdIndexRoute: typeof AudienceSessionIdIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -113,18 +145,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ActorIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/audience/$roleName': {
-      id: '/audience/$roleName'
-      path: '/audience/$roleName'
-      fullPath: '/audience/$roleName'
-      preLoaderRoute: typeof AudienceRoleNameRouteImport
+    '/audience/$sessionId/': {
+      id: '/audience/$sessionId/'
+      path: '/audience/$sessionId'
+      fullPath: '/audience/$sessionId'
+      preLoaderRoute: typeof AudienceSessionIdIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/actor/$roleName': {
-      id: '/actor/$roleName'
-      path: '/actor/$roleName'
-      fullPath: '/actor/$roleName'
-      preLoaderRoute: typeof ActorRoleNameRouteImport
+    '/actor/$sessionId/': {
+      id: '/actor/$sessionId/'
+      path: '/actor/$sessionId'
+      fullPath: '/actor/$sessionId'
+      preLoaderRoute: typeof ActorSessionIdIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/audience/$sessionId/$roleName': {
+      id: '/audience/$sessionId/$roleName'
+      path: '/audience/$sessionId/$roleName'
+      fullPath: '/audience/$sessionId/$roleName'
+      preLoaderRoute: typeof AudienceSessionIdRoleNameRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/actor/$sessionId/$roleName': {
+      id: '/actor/$sessionId/$roleName'
+      path: '/actor/$sessionId/$roleName'
+      fullPath: '/actor/$sessionId/$roleName'
+      preLoaderRoute: typeof ActorSessionIdRoleNameRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -132,10 +178,12 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  ActorRoleNameRoute: ActorRoleNameRoute,
-  AudienceRoleNameRoute: AudienceRoleNameRoute,
   ActorIndexRoute: ActorIndexRoute,
   AudienceIndexRoute: AudienceIndexRoute,
+  ActorSessionIdRoleNameRoute: ActorSessionIdRoleNameRoute,
+  AudienceSessionIdRoleNameRoute: AudienceSessionIdRoleNameRoute,
+  ActorSessionIdIndexRoute: ActorSessionIdIndexRoute,
+  AudienceSessionIdIndexRoute: AudienceSessionIdIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

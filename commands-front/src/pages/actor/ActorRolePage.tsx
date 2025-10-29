@@ -1,10 +1,10 @@
 import { useParams } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import * as signalR from "@microsoft/signalr";
-import { BASE } from "../API/URLS";
+import { BASE } from "../../API/URLS";
 
-export default function ActorPage() {
-  const { roleName } = useParams({ from: "/actor/$roleName" });
+export default function ActorRolePage() {
+  const { roleName } = useParams({ from: "/actor/$sessionId/$roleName" });
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
   const [selectedVoice, setSelectedVoice] =
     useState<SpeechSynthesisVoice | null>(null);

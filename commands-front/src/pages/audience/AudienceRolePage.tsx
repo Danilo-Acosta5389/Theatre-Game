@@ -1,10 +1,10 @@
 import { useParams } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import * as signalR from "@microsoft/signalr";
-import { BASE } from "../API/URLS";
+import { BASE } from "../../API/URLS";
 
 export default function AudienceRolePage() {
-  const { roleName } = useParams({ from: "/audience/$roleName" });
+  const { roleName } = useParams({ from: "/audience/$sessionId/$roleName" });
   const [connection, setConnection] = useState<signalR.HubConnection | null>(
     null
   );

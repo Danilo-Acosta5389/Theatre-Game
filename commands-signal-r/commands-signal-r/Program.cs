@@ -12,10 +12,10 @@ namespace commands_signal_r
             
             // Add services to the container.
 
-            //builder.Services.AddControllers();
+            builder.Services.AddControllers();
             //Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            //builder.Services.AddEndpointsApiExplorer();
-            //builder.Services.AddSwaggerGen();
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen();
 
             //SignalR and CORS
             builder.Services.AddSignalR();
@@ -34,21 +34,21 @@ namespace commands_signal_r
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
-            //if (app.Environment.IsDevelopment())
-            //{
-            //    app.UseSwagger();
-            //    app.UseSwaggerUI();
-            //}
+            if (app.Environment.IsDevelopment())
+            {
+                app.UseSwagger();
+                app.UseSwaggerUI();
+            }
 
             app.UseCors();
             app.MapHub<TheatreHub>("/theatrehub");
 
-            //app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
 
             //app.UseAuthorization();
 
 
-            //app.MapControllers();
+            app.MapControllers();
 
             app.Run();
         }
