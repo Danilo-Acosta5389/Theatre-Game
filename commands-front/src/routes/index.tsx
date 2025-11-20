@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import LandingPage from "../components/LandingPage";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -10,7 +11,8 @@ function Index() {
     { to: "/actor", label: "Actor" },
   ];
   return (
-    <div className="flex flex-col items-center justify-between h-[80vh]">
+    <>
+    <div className="flex flex-col items-center justify-between h-[70vh]">
       <div>
         <p className="sr-only">placeholder</p>
       </div>
@@ -32,5 +34,9 @@ function Index() {
         <p className="sr-only">placeholder</p>
       </div>
     </div>
+    <LandingPage/>
+    </>
   );
 }
+
+
