@@ -1,79 +1,73 @@
-import { motion, useScroll, useTransform, type Variants } from "framer-motion";
+import { motion, useScroll, useTransform, type Variants } from "motion/react";
 import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 
 export default function LandingPage() {
-
   // Scroll progress for the whole page
   const { scrollYProgress } = useScroll();
-
   // Map scroll progress to a scaleY value for the center line.
   // Starts at 0.06 (6% tall) and grows to 1 (full intended height) before the bottom.
   // We clamp the end at 0.92 so the line "finishes" ~8% before the absolute bottom.
   const scaleY = useTransform(scrollYProgress, [0, 0.92], [0.06, 1]);
-
   const fadeIn: Variants = {
-      hidden: { opacity: 0, y: 60 },
-      visible: {
+    hidden: { opacity: 0, y: 60 },
+    visible: {
       opacity: 1,
       y: 0,
       transition: {
-      duration: 0.9,
-      ease: [0.25, 0.1, 0.25, 1] // cubic-bezier easing instead of string
-      }
-    }
+        duration: 0.9,
+        ease: [0.25, 0.1, 0.25, 1], // cubic-bezier easing instead of string
+      },
+    },
   };
 
-  const { ref, inView } = useInView({threshold: 0});
+  const { ref, inView } = useInView();
 
   useEffect(() => {
-    
-    if (inView) {
-      console.log("In View? " + inView);
-      
-    }
+    console.log("is in view? " + inView);
   }, [inView]);
-
 
   return (
     <div className="w-full h-full text-white flex flex-col items-center my-20 space-y-40">
-
       {/* HERO SECTION */}
       <section className="w-full h-screen flex flex-col justify-center items-center text-center px-6">
-        <div className=" left-1/2 w-[4px] h-[200px] -translate-x-1/2 bg-gradient-to-b from-blue-400 via-blue-600 to-blue-900 rounded-full shadow-[0_0_25px_4px_rgba(0,122,255,0.45)] pointer-events-none"></div>
-      {/* Fixed center line that grows with scroll. We use scaleY so the line appears to grow downward. */}
-      {inView && <motion.div
-      initial={{ opacity: 0}}
-      whileInView={{ opacity: 1, transition: { duration: 0.5 }}}
-        style={{
-          scaleY,
-          transformOrigin: "top",
-        }}
-        className="fixed left-1/2 top-0 -translate-x-1/2 w-[4px] ml-[5px] h-[100vh] bg-gradient-to-b from-blue-400 via-blue-600 to-blue-900 rounded-full shadow-[0_0_25px_4px_rgba(0,122,255,0.45)] pointer-events-none"
-      />}
+        <div
+          ref={ref}
+          className="absolute top-130 left-1/2 w-[4px] h-[500px] -translate-x-1/2 bg-gradient-to-b from-blue-400 via-blue-600 to-blue-900 rounded-full shadow-[0_0_25px_4px_rgba(0,122,255,0.45)] pointer-events-none"
+        ></div>
+        {/* Fixed center line that grows with scroll. We use scaleY so the line appears to grow downward. */}
+        {!inView && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1, transition: { duration: 0.5 } }}
+            style={{
+              scaleY,
+              transformOrigin: "top",
+            }}
+            className="fixed left-1/2 top-0 bottom-0 -translate-x-1/2 w-[4px] h-[100vh] bg-gradient-to-b from-blue-400 via-blue-600 to-blue-900 rounded-full shadow-[0_0_25px_4px_rgba(0,122,255,0.45)] pointer-events-none"
+          />
+        )}
 
-        <motion.h1
-          initial={{ opacity: 1, y: -40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{once:true}}
+        <motion.div
+          ref={ref}
+          initial={{ opacity: 1 }}
+          whileInView={{ opacity: 1, y: 80 }}
+          viewport={{ once: true }}
           transition={{ duration: 1 }}
-          className="bg-black h-full text-7xl font-extrabold mb-6 tracking-tight"
+          className="bg-black z-10 p-10 rounded-full shadow-xl border border-white/10"
         >
-          Theatre Commands
-        </motion.h1>
-
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.2, duration: 1 }}
-          className="text-xl max-w-2xl opacity-80 mt-10 bg-black"
-        >
-          A live theatre experience where actors perform — and the audience directs the story.
-        </motion.p>
+          <h1 className=" text-7xl font-extrabold tracking-tight">
+            Theatre Commands
+          </h1>
+          <p className="text-xl max-w-2xl">
+            A live theatre experience where actors perform — and the audience
+            directs the story.
+          </p>
+        </motion.div>
       </section>
 
       {/* CONTENT SECTIONS */}
-      <section ref={ref} className="w-full max-w-6xl px-6 py-20 space-y-40 relative snap-start">
+      <section className="w-full max-w-6xl px-6 py-20 space-y-40 relative snap-start">
         {/* WHAT IS THIS? */}
         <motion.div
           variants={fadeIn}
@@ -83,9 +77,12 @@ export default function LandingPage() {
           className="grid md:grid-cols-2 gap-10 items-center"
         >
           <div>
-            <h2 className="text-4xl font-semibold mb-4">🎭 What Is This Website?</h2>
+            <h2 className="text-4xl font-semibold mb-4">
+              🎭 What Is This Website?
+            </h2>
             <p className="opacity-80 text-lg leading-relaxed">
-              Theatre Commands is a real-time stage where actors assume roles and audiences send spoken instructions.
+              Theatre Commands is a real-time stage where actors assume roles
+              and audiences send spoken instructions.
             </p>
           </div>
 
@@ -98,7 +95,10 @@ export default function LandingPage() {
             className="w-full h-72 bg-zinc-900 rounded-2xl border border-white/10 flex items-center justify-center text-zinc-600 shadow-xl"
           >
             <motion.div
-              whileHover={{ scale: 1.03, boxShadow: "0 0 25px rgba(0,122,255,0.35)" }}
+              whileHover={{
+                scale: 1.03,
+                boxShadow: "0 0 25px rgba(0,122,255,0.35)",
+              }}
               className="w-full h-72 bg-zinc-900 rounded-2xl border border-white/10 flex items-center justify-center text-zinc-600 shadow-xl"
             >
               Image Placeholder
@@ -122,13 +122,17 @@ export default function LandingPage() {
             className="w-full h-72 bg-zinc-900 rounded-2xl border border-white/10 flex items-center justify-center text-zinc-600 shadow-xl"
           >
             <motion.div
-              whileHover={{ scale: 1.03, boxShadow: "0 0 25px rgba(0,122,255,0.35)" }}
+              whileHover={{
+                scale: 1.03,
+                boxShadow: "0 0 25px rgba(0,122,255,0.35)",
+              }}
               className="w-full h-72 bg-zinc-900 rounded-2xl border border-white/10 flex items-center justify-center text-zinc-600 shadow-xl"
             >
               Image Placeholder
             </motion.div>
           </motion.div>
 
+          {/* {USEREF HERE} */}
           <div>
             <h2 className="text-4xl font-semibold mb-4">🕺 For Actors</h2>
             <ul className="list-disc pl-6 space-y-3 opacity-80 text-lg leading-relaxed">
@@ -166,7 +170,10 @@ export default function LandingPage() {
             className="w-full h-72 bg-zinc-900 rounded-2xl border border-white/10 flex items-center justify-center text-zinc-600 shadow-xl"
           >
             <motion.div
-              whileHover={{ scale: 1.03, boxShadow: "0 0 25px rgba(0,122,255,0.35)" }}
+              whileHover={{
+                scale: 1.03,
+                boxShadow: "0 0 25px rgba(0,122,255,0.35)",
+              }}
               className="w-full h-72 bg-zinc-900 rounded-2xl border border-white/10 flex items-center justify-center text-zinc-600 shadow-xl"
             >
               Image Placeholder

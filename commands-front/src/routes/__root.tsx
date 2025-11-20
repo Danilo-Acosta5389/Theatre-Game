@@ -7,7 +7,7 @@ const RootLayout = () => {
 
   return (
     <div className="h-screen w-screen bg-black text-white">
-      <div className="p-5 flex gap-5">
+      <div className="p-5 flex gap-5 bg-blue-900/30 backdrop-blur-sm border-b border-white/10">
         <Link to="/" className="[&.active]:font-bold">
           Start
         </Link>{" "}
