@@ -2,13 +2,17 @@ import { motion, useScroll, useTransform, type Variants } from "motion/react";
 import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 
-export default function LandingPage() {
+export default function LandingPage({
+  parentInView,
+}: {
+  parentInView: boolean;
+}) {
   // Scroll progress for the whole page
   const { scrollYProgress } = useScroll();
   // Map scroll progress to a scaleY value for the center line.
   // Starts at 0.06 (6% tall) and grows to 1 (full intended height) before the bottom.
   // We clamp the end at 0.92 so the line "finishes" ~8% before the absolute bottom.
-  const scaleY = useTransform(scrollYProgress, [0, 0.92], [0.06, 1]);
+  const scaleY = useTransform(scrollYProgress, [0, 0.92], [-1, 1]);
   const fadeIn: Variants = {
     hidden: { opacity: 0, y: 60 },
     visible: {
@@ -28,15 +32,12 @@ export default function LandingPage() {
   }, [inView]);
 
   return (
-    <div className="w-full h-full text-white flex flex-col items-center my-20 space-y-40">
+    <div className="h-full text-white flex flex-col items-center space-y-40">
       {/* HERO SECTION */}
+
       <section className="w-full h-screen flex flex-col justify-center items-center text-center px-6">
-        <div
-          ref={ref}
-          className="absolute top-130 left-1/2 w-[4px] h-[500px] -translate-x-1/2 bg-gradient-to-b from-blue-400 via-blue-600 to-blue-900 rounded-full shadow-[0_0_25px_4px_rgba(0,122,255,0.45)] pointer-events-none"
-        ></div>
         {/* Fixed center line that grows with scroll. We use scaleY so the line appears to grow downward. */}
-        {!inView && (
+        {!inView && !parentInView && (
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1, transition: { duration: 0.5 } }}
@@ -44,30 +45,36 @@ export default function LandingPage() {
               scaleY,
               transformOrigin: "top",
             }}
-            className="fixed left-1/2 top-0 bottom-0 -translate-x-1/2 w-[4px] h-[100vh] bg-gradient-to-b from-blue-400 via-blue-600 to-blue-900 rounded-full shadow-[0_0_25px_4px_rgba(0,122,255,0.45)] pointer-events-none"
+            className="fixed left-1/2 top-0 bottom-0 z-0 -translate-x-1/2 w-[4px] h-[100vh] bg-gradient-to-b from-blue-400 via-blue-600 to-blue-900 rounded-full shadow-[0_0_25px_4px_rgba(0,122,255,0.45)] pointer-events-none"
           />
         )}
 
         <motion.div
           ref={ref}
           initial={{ opacity: 1 }}
-          whileInView={{ opacity: 1, y: 80 }}
+          whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 1 }}
-          className="bg-black z-10 p-10 rounded-full shadow-xl border border-white/10"
+          className="bg-black"
         >
-          <h1 className=" text-7xl font-extrabold tracking-tight">
-            Theatre Commands
-          </h1>
-          <p className="text-xl max-w-2xl">
-            A live theatre experience where actors perform — and the audience
-            directs the story.
-          </p>
+          <div
+            ref={ref}
+            className="relative top-0 z-0 left-1/2 w-[4px] h-[500px] -translate-x-1/2 bg-gradient-to-b from-blue-400 via-blue-600 to-blue-900 rounded-full shadow-[0_0_25px_4px_rgba(0,122,255,0.45)]"
+          ></div>
+          <div className="rounded-full shadow-xl border border-white/10 p-10">
+            <h1 className=" text-7xl font-extrabold tracking-tight z-10">
+              Theatre Commands
+            </h1>
+            <p className="text-xl max-w-2xl z-10">
+              A live theatre experience where actors perform — and the audience
+              directs the story.
+            </p>
+          </div>
         </motion.div>
       </section>
 
       {/* CONTENT SECTIONS */}
-      <section className="w-full max-w-6xl px-6 py-20 space-y-40 relative snap-start">
+      <section className=" w-full max-w-6xl px-6 py-20 space-y-40 z-10">
         {/* WHAT IS THIS? */}
         <motion.div
           variants={fadeIn}

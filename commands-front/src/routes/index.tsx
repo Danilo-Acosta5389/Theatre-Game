@@ -1,5 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-//import LandingPage from "../components/LandingPage";
+import LandingPage from "../components/LandingPage";
+import { useInView } from "react-intersection-observer";
+import {useEffect} from "react"
+
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -10,13 +13,23 @@ function Index() {
     { to: "/audience", label: "Audience" },
     { to: "/actor", label: "Actor" },
   ];
+
+  const { ref, inView } = useInView();
+
+  useEffect(() => {
+    console.log("parent in view: " + inView)
+  },[inView])
+  console.log("parent in view: " + inView)
   return (
-    <>
-      <div className="flex flex-col items-center justify-between h-[70vh]">
+
+      <div
+        ref={ref}
+        className="flex flex-col items-center justify-center "
+      >
         <div>
           <p className="sr-only">placeholder</p>
         </div>
-        <div className=" flex flex-col items-center justify-center">
+        <div className=" flex flex-col items-center justify-center h-[70vh]">
           <h1 className=" text-4xl font-bold">What are you?</h1>
           <div className=" mt-8 flex flex-row gap-4">
             {links.map(({ to, label }) => (
@@ -33,8 +46,7 @@ function Index() {
         <div>
           <p className="sr-only">placeholder</p>
         </div>
+        <LandingPage parentInView={inView} />
       </div>
-      {/* <LandingPage/> */}
-    </>
   );
 }
