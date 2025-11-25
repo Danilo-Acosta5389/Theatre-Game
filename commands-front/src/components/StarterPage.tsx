@@ -2,10 +2,10 @@ import { useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { makeRandomSessionId, isValidSessionId } from "../utils/session";
 import { Loader } from "lucide-react";
-import { CHECK_SESSION_URL, CREATE_SESSION_URL } from "../API/URLS";
-import {motion} from "motion/react";
+//import { CHECK_SESSION_URL, CREATE_SESSION_URL } from "../API/URLS";
+import { motion } from "motion/react";
 
-function StartPage({theatreFunction}:{theatreFunction:string}) {
+function StartPage({ theatreFunction }: { theatreFunction: string }) {
   const navigate = useNavigate();
   const [sessionId, setSessionId] = useState(() => makeRandomSessionId());
   const [option, setOption] = useState<"create" | "enter" | "">("");
@@ -64,17 +64,18 @@ function StartPage({theatreFunction}:{theatreFunction:string}) {
     // }
 
     navigate({
-      to: "/"+theatreFunction+"/$sessionId/",
+      to: "/" + theatreFunction + "/$sessionId/",
       params: { sessionId },
     });
   }
 
   return (
     <motion.main
-    initial={{opacity:0}}
-    whileInView={{opacity:1}}
-    transition={{ duration: 1 }}
-    className="p-4 flex flex-col items-center justify-center h-[80vh]">
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      transition={{ duration: 1 }}
+      className="p-4 flex flex-col items-center justify-center h-[80vh]"
+    >
       <h1 className=" text-2xl">For {theatreFunction}</h1>
       <h1
         className="font-bold text-3xl my-4 hover:bg-slate-200 hover:text-black border-2 px-3 pt-2 pb-3 rounded cursor-pointer text-center"
