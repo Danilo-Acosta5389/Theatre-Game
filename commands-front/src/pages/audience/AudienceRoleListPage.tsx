@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { Link } from "@tanstack/react-router";
+import { Link, useParams } from "@tanstack/react-router";
 import * as signalR from "@microsoft/signalr";
 import { BASE } from "../../API/URLS";
 
 function AudienceRoleListPage() {
   const [roles, setRoles] = useState([]);
+  const {sessionId} = useParams({ from: "/audience/$sessionId/" });
 
   useEffect(() => {
     const conn = new signalR.HubConnectionBuilder()
@@ -36,7 +37,7 @@ function AudienceRoleListPage() {
 
   return (
     <div className=" p-5">
-      <strong>Available roles</strong>
+      <strong>Available roles in {sessionId}</strong>
       {roles.length === 0 && <p>No active roles</p>}
       <ul>
         {roles.map((role) => (
@@ -47,6 +48,11 @@ function AudienceRoleListPage() {
             <Link to={`/audience/${role}`}>{role}</Link>
           </li>
         ))}
+        <li
+            className=" hover:bg-slate-800 px-2 py-1 my-1 rounded-md cursor-pointer w-fit"
+          >
+            <Link to="/audience/$sessionId/$roleName" params={{ sessionId: "testSession - rm me", roleName: "testRole - rm me" }}>test - remove me</Link>
+        </li>
       </ul>
     </div>
   );

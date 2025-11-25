@@ -18,6 +18,9 @@ const RootLayout = () => {
         </Link>{" "}
         <Link to="/actor" className="[&.active]:font-bold">
           Actor
+        </Link>{" "}
+        <Link to="/director" className="[&.active]:font-bold">
+          Director
         </Link>
       </motion.div>
 
