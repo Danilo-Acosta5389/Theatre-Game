@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import LandingPage from "../components/LandingPage";
 import { useInView } from "react-intersection-observer";
-import { useEffect } from "react";
+import {motion} from "motion/react";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -12,19 +12,19 @@ function Index() {
     { to: "/audience", label: "Audience" },
     { to: "/actor", label: "Actor" },
   ];
-
+  
   const { ref, inView } = useInView();
 
-  useEffect(() => {
-    console.log("parent in view: " + inView);
-  }, [inView]);
-  console.log("parent in view: " + inView);
   return (
-    <div ref={ref} className="flex flex-col items-center justify-center ">
+    <div className=" flex flex-col items-center justify-center">
       <div>
         <p className="sr-only">placeholder</p>
       </div>
-      <div className=" flex flex-col items-center justify-center h-[70vh]">
+      <motion.div
+        initial={{opacity:0}}
+        whileInView={{opacity:1}}
+        transition={{ duration: 1 }}
+        ref={ref} className=" flex flex-col items-center justify-center h-[70vh]">
         <h1 className=" text-4xl font-bold">What are you?</h1>
         <div className=" mt-8 flex flex-row gap-4">
           {links.map(({ to, label }) => (
@@ -37,7 +37,8 @@ function Index() {
             </Link>
           ))}
         </div>
-      </div>
+        <span className="mt-10 text-slate-500">or are you the <Link to="/director" className="underline hover:text-slate-100 cursor-pointer">director?</Link></span>
+      </motion.div>
       <div>
         <p className="sr-only">placeholder</p>
       </div>

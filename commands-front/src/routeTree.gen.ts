@@ -10,8 +10,10 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as DirectorIndexRouteImport } from './routes/director/index'
 import { Route as AudienceIndexRouteImport } from './routes/audience/index'
 import { Route as ActorIndexRouteImport } from './routes/actor/index'
+import { Route as DirectorSessionIdIndexRouteImport } from './routes/director/$sessionId/index'
 import { Route as AudienceSessionIdIndexRouteImport } from './routes/audience/$sessionId/index'
 import { Route as ActorSessionIdIndexRouteImport } from './routes/actor/$sessionId/index'
 import { Route as AudienceSessionIdRoleNameRouteImport } from './routes/audience/$sessionId/$roleName'
@@ -22,6 +24,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DirectorIndexRoute = DirectorIndexRouteImport.update({
+  id: '/director/',
+  path: '/director/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AudienceIndexRoute = AudienceIndexRouteImport.update({
   id: '/audience/',
   path: '/audience/',
@@ -30,6 +37,11 @@ const AudienceIndexRoute = AudienceIndexRouteImport.update({
 const ActorIndexRoute = ActorIndexRouteImport.update({
   id: '/actor/',
   path: '/actor/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DirectorSessionIdIndexRoute = DirectorSessionIdIndexRouteImport.update({
+  id: '/director/$sessionId/',
+  path: '/director/$sessionId/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AudienceSessionIdIndexRoute = AudienceSessionIdIndexRouteImport.update({
@@ -58,29 +70,35 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/actor': typeof ActorIndexRoute
   '/audience': typeof AudienceIndexRoute
+  '/director': typeof DirectorIndexRoute
   '/actor/$sessionId/$roleName': typeof ActorSessionIdRoleNameRoute
   '/audience/$sessionId/$roleName': typeof AudienceSessionIdRoleNameRoute
   '/actor/$sessionId': typeof ActorSessionIdIndexRoute
   '/audience/$sessionId': typeof AudienceSessionIdIndexRoute
+  '/director/$sessionId': typeof DirectorSessionIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/actor': typeof ActorIndexRoute
   '/audience': typeof AudienceIndexRoute
+  '/director': typeof DirectorIndexRoute
   '/actor/$sessionId/$roleName': typeof ActorSessionIdRoleNameRoute
   '/audience/$sessionId/$roleName': typeof AudienceSessionIdRoleNameRoute
   '/actor/$sessionId': typeof ActorSessionIdIndexRoute
   '/audience/$sessionId': typeof AudienceSessionIdIndexRoute
+  '/director/$sessionId': typeof DirectorSessionIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/actor/': typeof ActorIndexRoute
   '/audience/': typeof AudienceIndexRoute
+  '/director/': typeof DirectorIndexRoute
   '/actor/$sessionId/$roleName': typeof ActorSessionIdRoleNameRoute
   '/audience/$sessionId/$roleName': typeof AudienceSessionIdRoleNameRoute
   '/actor/$sessionId/': typeof ActorSessionIdIndexRoute
   '/audience/$sessionId/': typeof AudienceSessionIdIndexRoute
+  '/director/$sessionId/': typeof DirectorSessionIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -88,38 +106,46 @@ export interface FileRouteTypes {
     | '/'
     | '/actor'
     | '/audience'
+    | '/director'
     | '/actor/$sessionId/$roleName'
     | '/audience/$sessionId/$roleName'
     | '/actor/$sessionId'
     | '/audience/$sessionId'
+    | '/director/$sessionId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/actor'
     | '/audience'
+    | '/director'
     | '/actor/$sessionId/$roleName'
     | '/audience/$sessionId/$roleName'
     | '/actor/$sessionId'
     | '/audience/$sessionId'
+    | '/director/$sessionId'
   id:
     | '__root__'
     | '/'
     | '/actor/'
     | '/audience/'
+    | '/director/'
     | '/actor/$sessionId/$roleName'
     | '/audience/$sessionId/$roleName'
     | '/actor/$sessionId/'
     | '/audience/$sessionId/'
+    | '/director/$sessionId/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ActorIndexRoute: typeof ActorIndexRoute
   AudienceIndexRoute: typeof AudienceIndexRoute
+  DirectorIndexRoute: typeof DirectorIndexRoute
   ActorSessionIdRoleNameRoute: typeof ActorSessionIdRoleNameRoute
   AudienceSessionIdRoleNameRoute: typeof AudienceSessionIdRoleNameRoute
   ActorSessionIdIndexRoute: typeof ActorSessionIdIndexRoute
   AudienceSessionIdIndexRoute: typeof AudienceSessionIdIndexRoute
+  DirectorSessionIdIndexRoute: typeof DirectorSessionIdIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -129,6 +155,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/director/': {
+      id: '/director/'
+      path: '/director'
+      fullPath: '/director'
+      preLoaderRoute: typeof DirectorIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/audience/': {
@@ -143,6 +176,13 @@ declare module '@tanstack/react-router' {
       path: '/actor'
       fullPath: '/actor'
       preLoaderRoute: typeof ActorIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/director/$sessionId/': {
+      id: '/director/$sessionId/'
+      path: '/director/$sessionId'
+      fullPath: '/director/$sessionId'
+      preLoaderRoute: typeof DirectorSessionIdIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/audience/$sessionId/': {
@@ -180,10 +220,12 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ActorIndexRoute: ActorIndexRoute,
   AudienceIndexRoute: AudienceIndexRoute,
+  DirectorIndexRoute: DirectorIndexRoute,
   ActorSessionIdRoleNameRoute: ActorSessionIdRoleNameRoute,
   AudienceSessionIdRoleNameRoute: AudienceSessionIdRoleNameRoute,
   ActorSessionIdIndexRoute: ActorSessionIdIndexRoute,
   AudienceSessionIdIndexRoute: AudienceSessionIdIndexRoute,
+  DirectorSessionIdIndexRoute: DirectorSessionIdIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

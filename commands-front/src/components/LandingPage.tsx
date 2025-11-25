@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import { motion, useScroll, useTransform, type Variants } from "motion/react";
 import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
@@ -28,11 +29,15 @@ export default function LandingPage({
   const { ref, inView } = useInView();
 
   useEffect(() => {
-    console.log("is in view? " + inView);
+    console.log("Child is in view? " + inView);
   }, [inView]);
 
+  useEffect(() => {
+    console.log("Parent is in view? " + parentInView);
+  }, [parentInView]);
+
   return (
-    <div className="h-full text-white flex flex-col items-center space-y-40">
+    <div className="h-full text-white flex flex-col items-center space-y-40 ">
       {/* HERO SECTION */}
 
       <section className="w-full h-screen flex flex-col justify-center items-center text-center px-6">
@@ -61,8 +66,8 @@ export default function LandingPage({
             ref={ref}
             className="relative top-0 z-0 left-1/2 w-[4px] h-[500px] -translate-x-1/2 bg-gradient-to-b from-blue-400 via-blue-600 to-blue-900 rounded-full shadow-[0_0_25px_4px_rgba(0,122,255,0.45)]"
           ></div>
-          <div className="rounded-full shadow-xl border border-white/10 p-10">
-            <h1 className=" text-7xl font-extrabold tracking-tight z-10">
+          <div className=" rounded-full shadow-xl border border-white/10 p-10">
+            <h1 className=" sm:text-7xl text-5xl font-extrabold tracking-tight">
               Theatre Commands
             </h1>
             <p className="text-xl max-w-2xl z-10">
@@ -133,13 +138,12 @@ export default function LandingPage({
                 scale: 1.03,
                 boxShadow: "0 0 25px rgba(0,122,255,0.35)",
               }}
-              className="w-full h-72 bg-zinc-900 rounded-2xl border border-white/10 flex items-center justify-center text-zinc-600 shadow-xl"
+              className="overflow-hidden w-full h-72 bg-zinc-900 rounded-2xl border border-white/10 flex items-center justify-center text-zinc-600 shadow-xl"
             >
               Image Placeholder
             </motion.div>
           </motion.div>
 
-          {/* {USEREF HERE} */}
           <div>
             <h2 className="text-4xl font-semibold mb-4">🕺 For Actors</h2>
             <ul className="list-disc pl-6 space-y-3 opacity-80 text-lg leading-relaxed">
@@ -215,20 +219,24 @@ export default function LandingPage({
         >
           <h2 className="text-4xl font-semibold">Ready to Begin?</h2>
 
+          <div className="flex flex-col">
           <div className="flex gap-8 justify-center">
-            <a
-              href="/actor"
+            <Link
+              to="/actor"
               className="px-10 py-4 rounded-2xl bg-white text-black font-semibold hover:bg-zinc-200 transition shadow-xl"
-            >
+              >
               Become an Actor
-            </a>
-            <a
-              href="/audience"
+            </Link>
+            <Link
+              to="/audience"
               className="px-10 py-4 rounded-2xl bg-zinc-800 text-white border border-white/20 hover:bg-zinc-700 transition shadow-xl"
-            >
+              >
               Join as Audience
-            </a>
+            </Link>
           </div>
+          <span className="mt-8 text-slate-500">or be the <Link to="/director" className="underline hover:text-slate-100 cursor-pointer">director</Link></span>
+              </div>
+
         </motion.div>
       </section>
     </div>

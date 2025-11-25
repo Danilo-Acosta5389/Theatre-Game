@@ -1,6 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
-import AudienceStartPage from "../../pages/audience/AudienceStartPage";
+import StarterPage from "../../components/StarterPage";
 
 export const Route = createFileRoute("/audience/")({
-  component: AudienceStartPage,
+  component: () =>{
+    return <StarterPage theatreFunction="Audience" />;
+  }
 });

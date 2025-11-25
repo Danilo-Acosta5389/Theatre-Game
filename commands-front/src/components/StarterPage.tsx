@@ -1,10 +1,11 @@
 import { useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { makeRandomSessionId, isValidSessionId } from "../../utils/session";
+import { makeRandomSessionId, isValidSessionId } from "../utils/session";
 import { Loader } from "lucide-react";
-import { CHECK_SESSION_URL, CREATE_SESSION_URL } from "../../API/URLS";
+import { CHECK_SESSION_URL, CREATE_SESSION_URL } from "../API/URLS";
+import {motion} from "motion/react";
 
-function AudienceStartPage() {
+function StartPage({theatreFunction}:{theatreFunction:string}) {
   const navigate = useNavigate();
   const [sessionId, setSessionId] = useState(() => makeRandomSessionId());
   const [option, setOption] = useState<"create" | "enter" | "">("");
@@ -38,39 +39,43 @@ function AudienceStartPage() {
     if (!sessionId) return;
     setIsLoading(true);
 
-    if (option === "create") {
-      const res = await fetch(CREATE_SESSION_URL(sessionId), {
-        method: "POST",
-      });
+    // if (option === "create") {
+    //   const res = await fetch(CREATE_SESSION_URL(sessionId), {
+    //     method: "POST",
+    //   });
 
-      if (!res.ok) {
-        alert("Session already exists!");
-        setIsLoading(false);
-        return;
-      }
-    }
+    //   if (!res.ok) {
+    //     alert("Session already exists!");
+    //     setIsLoading(false);
+    //     return;
+    //   }
+    // }
 
-    if (option === "enter") {
-      const res = await fetch(CHECK_SESSION_URL(sessionId), {
-        method: "POST",
-      });
+    // if (option === "enter") {
+    //   const res = await fetch(CHECK_SESSION_URL(sessionId), {
+    //     method: "POST",
+    //   });
 
-      if (!res.ok) {
-        alert("Session does not exist!");
-        setIsLoading(false);
-        return;
-      }
-    }
+    //   if (!res.ok) {
+    //     alert("Session does not exist!");
+    //     setIsLoading(false);
+    //     return;
+    //   }
+    // }
 
     navigate({
-      to: "/audience/$sessionId",
+      to: "/"+theatreFunction+"/$sessionId/",
       params: { sessionId },
     });
   }
 
   return (
-    <main className="p-4 flex flex-col items-center justify-center h-[80vh]">
-      <h1 className=" text-2xl">For Audience</h1>
+    <motion.main
+    initial={{opacity:0}}
+    whileInView={{opacity:1}}
+    transition={{ duration: 1 }}
+    className="p-4 flex flex-col items-center justify-center h-[80vh]">
+      <h1 className=" text-2xl">For {theatreFunction}</h1>
       <h1
         className="font-bold text-3xl my-4 hover:bg-slate-200 hover:text-black border-2 px-3 pt-2 pb-3 rounded cursor-pointer text-center"
         onClick={() => setOption("create")}
@@ -205,7 +210,7 @@ function AudienceStartPage() {
           </form>
         </div>
       )}
-    </main>
+    </motion.main>
   );
 }
-export default AudienceStartPage;
+export default StartPage;
