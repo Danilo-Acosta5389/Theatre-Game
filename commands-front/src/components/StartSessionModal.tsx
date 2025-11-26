@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { isValidSessionId, makeRandomSessionId } from "../utils/session";
 import { Loader } from "lucide-react";
 import { motion } from "motion/react";
@@ -21,6 +21,25 @@ export default function StartSessionModal({
     setOption("");
     setOpen(false);
   }
+  const closeModalRef = useRef<() => void>(() => {});
+
+  // keep a stable ref to the latest closeModal so the key handler can call it
+  closeModalRef.current = closeModal;
+
+  useEffect(() => {
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeModalRef.current();
+    };
+
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", onKey);
+    };
+  }, []);
 
   async function goToSession(): Promise<void> {
     if (!isValidSessionId(sessionId)) {
@@ -64,22 +83,25 @@ export default function StartSessionModal({
   }
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.1 }}
-    >
-      <div
-        onClick={closeModal}
-        className="fixed inset-0 flex justify-center items-center z-50
-      bg-black/50"
-      >
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.1 }}>
+      {/* Overlay + Centered wrapper */}
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-6">
         <div
-          className="bg-gray-900 p-6 rounded-lg flex flex-col gap-4 min-w-[300px] border border-white
-        transition-all duration-200"
+          onClick={closeModal}
+          className="fixed inset-0 z-40 bg-black/50"
+          aria-hidden="true"
+        />
+
+        <div
+          role="dialog"
+          aria-modal="true"
+          className="relative z-50 bg-gray-900 p-6 rounded-lg flex flex-col gap-4 min-w-[300px] border border-white transition-all duration-200"
         >
           <form
-            action={goToSession}
+            onSubmit={async (e) => {
+              e.preventDefault();
+              await goToSession();
+            }}
             className={` p-6 flex flex-col gap-4 min-w-[300px]  `}
           >
             <div className="flex flex-col">

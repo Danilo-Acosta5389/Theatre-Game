@@ -48,7 +48,7 @@ function Index() {
             {links.map(({ to, label }) => (
               <div
                 onClick={() => setOption(label as "Actor" | "Audience")}
-                className=" border-2 p-4 rounded-md w-[150px] text-center hover:bg-slate-500 text-2xl"
+                className=" border-2 p-4 rounded-md w-[150px] text-center hover:bg-slate-500 text-2xl cursor-pointer"
                 key={to}
               >
                 {label}

@@ -1,7 +1,7 @@
-import { Link } from "@tanstack/react-router";
 import { motion, useScroll, useTransform, type Variants } from "motion/react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
+import StartSessionModal from "./StartSessionModal";
 
 export default function LandingPage({
   parentInView,
@@ -26,15 +26,29 @@ export default function LandingPage({
     },
   };
 
+  const [modalOpen, setModalOpen] = useState(false);
+    const [option, setOption] = useState<"Actor" | "Audience" | "Director" | "">(
+      ""
+    );
+
   const { ref, inView } = useInView();
 
-  useEffect(() => {
-    console.log("Child is in view? " + inView);
-  }, [inView]);
+  // useEffect(() => {
+  //   console.log("Child is in view? " + inView);
+  // }, [inView]);
+
+  // useEffect(() => {
+  //   console.log("Parent is in view? " + parentInView);
+  // }, [parentInView]);
 
   useEffect(() => {
-    console.log("Parent is in view? " + parentInView);
-  }, [parentInView]);
+    console.log("Option selected: ", option);
+    if (option) {
+      setModalOpen(true);
+    } else {
+      setModalOpen(false);
+    }
+  }, [option]);
 
   return (
     <div className="h-full text-white flex flex-col items-center space-y-40 ">
@@ -221,24 +235,31 @@ export default function LandingPage({
 
           <div className="flex flex-col">
           <div className="flex gap-8 justify-center">
-            <Link
-              to="/actor"
-              className="px-10 py-4 rounded-2xl bg-white text-black font-semibold hover:bg-zinc-200 transition shadow-xl"
+            <div
+              onClick={() => setOption("Actor")}
+              className="px-10 py-4 rounded-2xl bg-white text-black font-semibold hover:bg-zinc-200 transition shadow-xl cursor-pointer"
               >
               Become an Actor
-            </Link>
-            <Link
-              to="/audience"
-              className="px-10 py-4 rounded-2xl bg-zinc-800 text-white border border-white/20 hover:bg-zinc-700 transition shadow-xl"
+            </div>
+            <div
+              onClick={() => setOption("Audience")}
+              className="px-10 py-4 rounded-2xl bg-zinc-800 text-white border border-white/20 hover:bg-zinc-700 transition shadow-xl cursor-pointer"
               >
               Join as Audience
-            </Link>
+            </div>
           </div>
-          <span className="mt-8 text-slate-500">or be the <Link to="/director" className="underline hover:text-slate-100 cursor-pointer">director</Link></span>
-              </div>
+          <span className="mt-8 text-slate-500">or be the <span onClick={() => setOption("Director")} className="underline hover:text-slate-100 cursor-pointer">director</span></span>
+          </div>
 
         </motion.div>
       </section>
+      {modalOpen && (
+              <StartSessionModal
+                theatreFunction={option}
+                setOpen={() => setModalOpen(false)}
+                setOption={() => setOption("")}
+              />
+            )}
     </div>
   );
 }
