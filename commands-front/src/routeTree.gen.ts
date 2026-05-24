@@ -68,14 +68,14 @@ const ActorSessionIdRoleNameRoute = ActorSessionIdRoleNameRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/actor': typeof ActorIndexRoute
-  '/audience': typeof AudienceIndexRoute
-  '/director': typeof DirectorIndexRoute
+  '/actor/': typeof ActorIndexRoute
+  '/audience/': typeof AudienceIndexRoute
+  '/director/': typeof DirectorIndexRoute
   '/actor/$sessionId/$roleName': typeof ActorSessionIdRoleNameRoute
   '/audience/$sessionId/$roleName': typeof AudienceSessionIdRoleNameRoute
-  '/actor/$sessionId': typeof ActorSessionIdIndexRoute
-  '/audience/$sessionId': typeof AudienceSessionIdIndexRoute
-  '/director/$sessionId': typeof DirectorSessionIdIndexRoute
+  '/actor/$sessionId/': typeof ActorSessionIdIndexRoute
+  '/audience/$sessionId/': typeof AudienceSessionIdIndexRoute
+  '/director/$sessionId/': typeof DirectorSessionIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -104,14 +104,14 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/actor'
-    | '/audience'
-    | '/director'
+    | '/actor/'
+    | '/audience/'
+    | '/director/'
     | '/actor/$sessionId/$roleName'
     | '/audience/$sessionId/$roleName'
-    | '/actor/$sessionId'
-    | '/audience/$sessionId'
-    | '/director/$sessionId'
+    | '/actor/$sessionId/'
+    | '/audience/$sessionId/'
+    | '/director/$sessionId/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -160,42 +160,42 @@ declare module '@tanstack/react-router' {
     '/director/': {
       id: '/director/'
       path: '/director'
-      fullPath: '/director'
+      fullPath: '/director/'
       preLoaderRoute: typeof DirectorIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/audience/': {
       id: '/audience/'
       path: '/audience'
-      fullPath: '/audience'
+      fullPath: '/audience/'
       preLoaderRoute: typeof AudienceIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/actor/': {
       id: '/actor/'
       path: '/actor'
-      fullPath: '/actor'
+      fullPath: '/actor/'
       preLoaderRoute: typeof ActorIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/director/$sessionId/': {
       id: '/director/$sessionId/'
       path: '/director/$sessionId'
-      fullPath: '/director/$sessionId'
+      fullPath: '/director/$sessionId/'
       preLoaderRoute: typeof DirectorSessionIdIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/audience/$sessionId/': {
       id: '/audience/$sessionId/'
       path: '/audience/$sessionId'
-      fullPath: '/audience/$sessionId'
+      fullPath: '/audience/$sessionId/'
       preLoaderRoute: typeof AudienceSessionIdIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/actor/$sessionId/': {
       id: '/actor/$sessionId/'
       path: '/actor/$sessionId'
-      fullPath: '/actor/$sessionId'
+      fullPath: '/actor/$sessionId/'
       preLoaderRoute: typeof ActorSessionIdIndexRouteImport
       parentRoute: typeof rootRouteImport
     }

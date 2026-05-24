@@ -7,17 +7,17 @@ namespace commands_signal_r.Controllers
     [Route("api/role")]
     public class RoleController : ControllerBase
     {
-        [HttpPost("register/{sessionId}/{roleName}")]
-        public async Task<IActionResult> Register(string sessionId, string roleName)
-        {
+        //[HttpPost("register/{sessionId}/{roleName}")]
+        //public async Task<IActionResult> Register(string sessionId, string roleName)
+        //{
 
-            var created = await TheatreHub.RegisterRole(sessionId, roleName);
+        //    var created = await TheatreHub.RegisterRole(sessionId, roleName);
 
-            if (!created)
-                return Conflict("Something went wrong");
+        //    if (!created)
+        //        return Conflict("Something went wrong");
 
-            return Ok();
-        }
+        //    return Ok();
+        //}
 
         //[HttpPost("check/{roleName}")]
         //public IActionResult Check(string sessionId)

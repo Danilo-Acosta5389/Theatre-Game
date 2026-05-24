@@ -27,9 +27,7 @@ export default function LandingPage({
   };
 
   const [modalOpen, setModalOpen] = useState(false);
-    const [option, setOption] = useState<"Actor" | "Audience" | "Director" | "">(
-      ""
-    );
+  const [option, setOption] = useState<string>("");
 
   const { ref, inView } = useInView();
 
@@ -234,32 +232,39 @@ export default function LandingPage({
           <h2 className="text-4xl font-semibold">Ready to Begin?</h2>
 
           <div className="flex flex-col">
-          <div className="flex gap-8 justify-center">
-            <div
-              onClick={() => setOption("Actor")}
-              className="px-10 py-4 rounded-2xl bg-white text-black font-semibold hover:bg-zinc-200 transition shadow-xl cursor-pointer"
+            <div className="flex gap-8 justify-center">
+              <div
+                onClick={() => setOption("Actor")}
+                className="px-10 py-4 rounded-2xl bg-white text-black font-semibold hover:bg-zinc-200 transition shadow-xl cursor-pointer"
               >
-              Become an Actor
-            </div>
-            <div
-              onClick={() => setOption("Audience")}
-              className="px-10 py-4 rounded-2xl bg-zinc-800 text-white border border-white/20 hover:bg-zinc-700 transition shadow-xl cursor-pointer"
+                Become an Actor
+              </div>
+              <div
+                onClick={() => setOption("Audience")}
+                className="px-10 py-4 rounded-2xl bg-zinc-800 text-white border border-white/20 hover:bg-zinc-700 transition shadow-xl cursor-pointer"
               >
-              Join as Audience
+                Join as Audience
+              </div>
             </div>
+            <span className="mt-8 text-slate-500">
+              or be the{" "}
+              <span
+                onClick={() => setOption("Director")}
+                className="underline hover:text-slate-100 cursor-pointer"
+              >
+                director
+              </span>
+            </span>
           </div>
-          <span className="mt-8 text-slate-500">or be the <span onClick={() => setOption("Director")} className="underline hover:text-slate-100 cursor-pointer">director</span></span>
-          </div>
-
         </motion.div>
       </section>
       {modalOpen && (
-              <StartSessionModal
-                theatreFunction={option}
-                setOpen={() => setModalOpen(false)}
-                setOption={() => setOption("")}
-              />
-            )}
+        <StartSessionModal
+          theatreFunction={option}
+          setOpen={() => setModalOpen(false)}
+          setOption={() => setOption("")}
+        />
+      )}
     </div>
   );
 }

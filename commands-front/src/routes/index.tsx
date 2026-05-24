@@ -16,9 +16,7 @@ function Index() {
   ];
 
   const [modalOpen, setModalOpen] = useState(false);
-  const [option, setOption] = useState<"Actor" | "Audience" | "Director" | "">(
-    ""
-  );
+  const [option, setOption] = useState<string>("");
   const { ref, inView } = useInView();
 
   useEffect(() => {
@@ -47,7 +45,7 @@ function Index() {
           <div className=" mt-8 flex flex-row gap-4">
             {links.map(({ to, label }) => (
               <div
-                onClick={() => setOption(label as "Actor" | "Audience")}
+                onClick={() => setOption(label)}
                 className=" border-2 p-4 rounded-md w-[150px] text-center hover:bg-slate-500 text-2xl cursor-pointer"
                 key={to}
               >

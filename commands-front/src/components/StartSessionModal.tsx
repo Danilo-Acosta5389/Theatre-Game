@@ -51,6 +51,14 @@ export default function StartSessionModal({
     if (!sessionId) return;
     setIsLoading(true);
 
+    //THIS IS WHERE YOU WOULD CALL YOUR BACKEND TO CHECK/CREATE THE SESSION
+
+    //THINGS BACKEND SHOULD CHECK/DO:
+    // IS ACTOR OR OTHER
+    // CHECK IF SESSION ID EXISTS, IF NOT CREATE IT
+    // IS LOGGED IN? IF YES, SAVE SESSION TO DB. IF NO, PROCEED WITHOUT SAVING BUT RETURN A TEMP ID OR SOMETHING TO IDENTIFY THE USER IN THE NEXT PAGE
+    // RETURN ANY OTHER INFO YOU MIGHT NEED IN THE NEXT PAGE (LIKE USER ID, USERNAME, ETC)
+
     // if (option === "create") {
     //   const res = await fetch(CREATE_SESSION_URL(sessionId), {
     //     method: "POST",
@@ -75,6 +83,8 @@ export default function StartSessionModal({
     //   }
     // }
 
+    //AND THEN NAVIGATE TO THE ACTOR OR AUDIENCE/OTHERS PAGE WITH THE SESSION ID
+
     // navigate({
     //   to: "/" + theatreFunction + "/$sessionId/",
     //   params: { sessionId },
@@ -83,7 +93,11 @@ export default function StartSessionModal({
   }
 
   return (
-    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.1 }}>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.1 }}
+    >
       {/* Overlay + Centered wrapper */}
       <div className="fixed inset-0 z-50 flex items-center justify-center p-6">
         <div
